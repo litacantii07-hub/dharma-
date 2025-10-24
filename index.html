@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Untuk Ama 💖</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #ffe1ef, #ffd6f9);
+      color: #333;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    h1 {
+      margin-top: 80px;
+      color: #ff5c8d;
+      font-size: 2.4em;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    #message {
+      max-width: 650px;
+      margin: 60px auto;
+      font-size: 1.2em;
+      line-height: 1.8;
+      white-space: pre-line;
+      color: #4a4a4a;
+      min-height: 200px;
+      transition: opacity 0.5s ease;
+    }
+
+    button {
+      background-color: #ff5c8d;
+      border: none;
+      color: white;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+      background-color: #ff7ba5;
+    }
+
+    .heart {
+      font-size: 2em;
+      color: #ff5c8d;
+      animation: beat 1s infinite;
+      margin-top: 20px;
+    }
+
+    footer {
+      color: #666;
+      margin-top: 40px;
+      font-size: 0.9em;
+    }
+
+    @keyframes beat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.3); }
+    }
+
+    @keyframes floatUp {
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(-100px); opacity: 0; }
+    }
+
+    .floating-heart {
+      position: fixed;
+      font-size: 1.5em;
+      color: #ff5c8d;
+      animation: floatUp 2.5s ease-in forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Hai, Ama 💞</h1>
+
+  <div id="message">✨ Tap tombol di bawah buat mulai ya 💖</div>
+
+  <button id="nextButton">Tap untuk lanjut ✨</button>
+
+  <div class="heart">💖💖💖</div>
+
+  <audio id="bgMusic" loop>
+    <source src="https://dl.dropboxusercontent.com/s/3h6n7m0n0v0o4fi/about-you.mp3" type="audio/mpeg">
+  </audio>
+
+  <footer>— dari Gaga, yang selaluuu sayang sama Ama 💞 —</footer>
+
+  <script>
+    const paragraphs = [
+      "sayangggg, maaciiii yaaaa sudaaaa mauuuu samaaa akuuuu.",
+      "maaciiii sudaaaa nemeninnn akuuuu 1 tahun 6 bulan.",
+      "maaciiii atassss semuanyaaaa, dariii usahaaaa, waktuuuu dan effortnyaaaa.",
+      "maaciiii sudaaaa selaluuuu adaaaa. maaciiii sudaaaa jadiiii rumaaaa yang baikkkk.",
+      "tenangggg yaaaa ayangggg, akuuuu disiniiii sebagaiiii rumaaaa kamuuuu.",
+      "jadiii jangannnn raguuuu kalauuuu mauuu pulanggg.",
+      "akuuuu ndaaaa bakalannnn ngrhakiminnn kamuuu, akuuu bakalannnn pelukkk kamuuuu dan bilangggg duniaaaa akannnn baikkkk baikkkk sajaaaa.",
+      "i loveeeee youuuuu soooo muchhhh 💘"
+    ];
+
+    let index = 0;
+    const msg = document.getElementById("message");
+    const nextButton = document.getElementById("nextButton");
+    const music = document.getElementById("bgMusic");
+
+    // mulai musik pas pertama klik
+    let started = false;
+
+    function typeText(text, callback) {
+      msg.innerHTML = "";
+      let i = 0;
+      const speed = 45;
+      function type() {
+        if (i < text.length) {
+          msg.innerHTML += text.charAt(i);
+          i++;
+          setTimeout(type, speed);
+        } else if (callback) callback();
+      }
+      type();
+    }
+
+    function showNextParagraph() {
+      if (!started) {
+        music.play().catch(() => {});
+        started = true;
+      }
+
+      if (index < paragraphs.length) {
+        typeText(paragraphs[index]);
+        index++;
+
+        // efek love
+        for (let i = 0; i < 10; i++) {
+          const heart = document.createElement("div");
+          heart.classList.add("floating-heart");
+          heart.textContent = "💖";
+          heart.style.left = Math.random() * window.innerWidth + "px";
+          heart.style.top = (window.innerHeight - 50) + "px";
+          document.body.appendChild(heart);
+          setTimeout(() => heart.remove(), 2000);
+        }
+      } else {
+        msg.innerHTML = "💗 Udah selesai, tapi cintaku ke kamu nggak akan pernah selesai 💗";
+        nextButton.style.display = "none";
+      }
+    }
+
+    nextButton.addEventListener("click", showNextParagraph);
+  </script>
+
+</body>
+</html>
